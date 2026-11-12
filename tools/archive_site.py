@@ -297,7 +297,8 @@ class Archiver:
                     break
                 total = headers.get("X-WP-Total", total)
                 items += data
-                if len(data) < 100:
+                # A page can hold fewer than 100 items (private ones are filtered out), so trust the page count.
+                if page >= int(headers.get("X-WP-TotalPages") or 0) and len(data) < 100:
                     break
                 page += 1
             if not items:
