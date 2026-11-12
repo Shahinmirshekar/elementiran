@@ -30,6 +30,7 @@ export function HeatLoop({ className = "" }: { className?: string }) {
       <path d={d} stroke="#36c5d8" strokeOpacity="0.35" strokeWidth="3" />
       <path d={d} stroke="#ff6b35" strokeWidth="16" filter="url(#soft)" className="loop-glow" />
       <path d={d} stroke="url(#warm)" strokeWidth="3.5" pathLength={1} className="loop-warm" />
+      <path d={d} stroke="#fff3e6" strokeWidth="5" pathLength={1} className="loop-pulse" />
       <circle cx={RIGHT + 60} cy="40" r="6" fill="#36c5d8" />
     </svg>
   );

@@ -80,6 +80,32 @@
     border-color: rgb(255 255 255 / 0.3);
   }
 
+  /* Thermal-camera legend: cold at the reading start, hot at the end */
+  .thermal-scale {
+    height: 0.6rem;
+    background:
+      repeating-linear-gradient(to left, transparent 0 calc(5% - 1px), rgb(17 24 32 / 0.55) calc(5% - 1px) 5%),
+      linear-gradient(to left, #36c5d8, #24627f 28%, #6b2f3a 52%, #ff6b35 78%, #ffd9a0);
+  }
+
+  /* Product row that floods with heat from the reading start when pointed at */
+  .heat-row { position: relative; isolation: isolate; }
+  .heat-row::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to left, var(--color-heat), #ffb089);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .heat-row:hover::before, .heat-row:focus-within::before { transform: scaleX(1); }
+
+  /* Large type that sits cold and ignites when pointed at */
+  .ignite { color: #4b535c; /* solid: translucent fill shows seams where joined Persian letters overlap */ transition: color 0.35s, text-shadow 0.35s; }
+  a:hover .ignite, a:focus-visible .ignite { color: var(--color-heat); text-shadow: 0 0 2.5rem rgb(255 107 53 / 0.55); }
+
   /* Row that warms up along its bottom edge when pointed at */
   .warm-row { position: relative; }
   .warm-row::after {
@@ -106,12 +132,25 @@
   opacity: 0;
   animation: glow 2s 4.2s ease-out forwards;
 }
+/* Once energised, a pulse of current keeps travelling along the cable. */
+.loop-pulse {
+  stroke-dasharray: 0.03 0.97;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px #ff6b35);
+  animation: pulse 7s 5s linear infinite;
+}
 @keyframes energize { to { stroke-dashoffset: 0; } }
-@keyframes glow { to { opacity: 0.22; } }
+@keyframes glow { to { opacity: 0.3; } }
+@keyframes pulse { 0% { stroke-dashoffset: 1; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes breathe { 50% { box-shadow: 0 0 0 9px rgb(255 107 53 / 0.22), 0 0 0 22px rgb(255 107 53 / 0.1); } }
+.heat-dot { animation: breathe 3.2s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .loop-warm { animation: none; stroke-dashoffset: 0; }
-  .loop-glow { animation: none; opacity: 0.22; }
+  .loop-glow { animation: none; opacity: 0.3; }
+  .loop-pulse, .heat-dot { animation: none; }
+  .heat-row::before, .ignite { transition: none; }
   .warm-row::after { transition: none; }
 }

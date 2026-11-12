@@ -16,7 +16,7 @@ export function FloorSection() {
               {l.cable && (
                 <div className="absolute inset-0 flex items-center justify-around px-4" aria-hidden="true">
                   {Array.from({ length: 9 }, (_, i) => (
-                    <span key={i} className="size-3 rounded-full bg-heat shadow-[0_0_0_6px_rgb(255_107_53/0.18),0_0_0_14px_rgb(255_107_53/0.08)]" />
+                    <span key={i} style={{ animationDelay: `${i * 0.18}s` }} className="heat-dot size-3 rounded-full bg-heat shadow-[0_0_0_6px_rgb(255_107_53/0.18),0_0_0_14px_rgb(255_107_53/0.08)]" />
                   ))}
                 </div>
               )}

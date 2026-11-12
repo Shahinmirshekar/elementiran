@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { FloorSection } from "@/components/FloorSection";
+import { HeatField } from "@/components/HeatField";
 import { HeatLoop } from "@/components/HeatLoop";
-import { CatalogBand, Consult, Pending, Section } from "@/components/Parts";
+import { CatalogBand, Consult, Section } from "@/components/Parts";
 import { products, projects, solutionGroups } from "@/content/site";
 
 export default function Home() {
   return (
     <>
-      <section className="blueprint overflow-hidden bg-coal text-paper">
-        <div className="wrap grid items-center gap-10 pb-16 pt-12 lg:grid-cols-12 lg:gap-4 lg:pb-24 lg:pt-20">
-          <div className="lg:col-span-6">
-            <h1 className="text-[2.6rem] font-black leading-[1.2] sm:text-6xl lg:text-7xl">مهندسی گرما، برای آینده‌ای هوشمند</h1>
+      <section className="blueprint relative isolate overflow-hidden bg-coal text-paper">
+        <HeatField />
+        <div className="wrap relative grid items-center gap-10 pb-14 pt-12 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-12 lg:gap-4 lg:pt-16">
+          <div className="lg:col-span-7">
+            <h1 className="text-[2.75rem] font-black leading-[1.15] sm:text-7xl xl:text-[6.5rem]">مهندسی گرما، برای آینده‌ای هوشمند</h1>
             <p className="mt-7 max-w-xl text-lg text-paper/80">
               المنتیران کابل حرارتی، سیستم گرمایش از کف و المنت صنعتی را برای پروژه‌های صنعتی، ساختمانی و خانگی تأمین می‌کند.
             </p>
@@ -19,7 +21,14 @@ export default function Home() {
               <Link href="/contact" className="btn btn-line">دریافت مشاوره تخصصی</Link>
             </div>
           </div>
-          <HeatLoop className="w-full lg:col-span-6 lg:-me-10 lg:scale-110" />
+          <HeatLoop className="w-full lg:col-span-5 lg:-ms-24 lg:w-[150%] lg:max-w-none" />
+        </div>
+        <div className="wrap relative pb-8">
+          <div className="thermal-scale" aria-hidden="true" />
+          <div className="mt-2 flex justify-between text-sm text-paper/70" aria-hidden="true">
+            <span>سرد</span>
+            <span>گرم</span>
+          </div>
         </div>
       </section>
 
@@ -30,10 +39,10 @@ export default function Home() {
           </div>
           <ul className="border-t border-coal/25 lg:col-span-8">
             {products.map((p) => (
-              <li key={p.slug} className="warm-row border-b border-coal/25">
-                <Link href={`/products/${p.slug}`} className="grid gap-2 py-7 sm:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] sm:gap-8">
-                  <h3 className="text-2xl font-extrabold sm:text-[1.7rem]">{p.title}</h3>
-                  <p className="text-coal/75">{p.summary}</p>
+              <li key={p.slug} className="heat-row border-b border-coal/25">
+                <Link href={`/products/${p.slug}`} className="grid items-center gap-2 px-4 py-8 sm:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] sm:gap-8 sm:px-6">
+                  <h3 className="text-3xl font-black sm:text-4xl">{p.title}</h3>
+                  <p className="text-coal/80">{p.summary}</p>
                 </Link>
               </li>
             ))}
@@ -84,11 +93,12 @@ export default function Home() {
             <h2 className="text-4xl font-black sm:text-5xl">پروژه‌های اجراشده</h2>
             <Link href="/projects" className="btn btn-line">همه پروژه‌ها</Link>
           </div>
-          <ul className="mt-12 grid gap-8 md:grid-cols-3">
+          <ul className="mt-12 border-t border-white/15">
             {projects.map((name) => (
-              <li key={name}>
-                <Pending what="تصاویر این پروژه" ratio="4 / 3" dark />
-                <h3 className="mt-4 text-2xl font-extrabold">{name}</h3>
+              <li key={name} className="border-b border-white/15">
+                <Link href="/projects" className="block py-6 lg:py-8">
+                  <h3 className="ignite text-5xl font-black leading-tight sm:text-7xl lg:text-8xl">{name}</h3>
+                </Link>
               </li>
             ))}
           </ul>
