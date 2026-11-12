@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --color-coal: #111820;
+  --color-graphite: #222b34;
+  --color-steel: #3a4652;
+  --color-paper: #f5f4f0;
+  --color-chalk: #e4e2db;
+  --color-heat: #ff6b35;
+  --color-ember: #b3401a; /* heat, darkened for text on paper (AA) */
+  --color-cool: #36c5d8;
+  --font-sans: var(--font-vazir), Tahoma, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-coal);
+    font-family: var(--font-sans);
+    line-height: 1.9;
+    text-wrap: pretty;
+  }
+  h1, h2, h3 {
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cool);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .wrap {
+    margin-inline: auto;
+    max-width: 82rem;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .wrap { padding-inline: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .wrap { padding-inline: 3.5rem; }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.5rem 1.6rem;
+    font-weight: 700;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn-heat { background: var(--color-heat); color: var(--color-coal); }
+  .btn-heat:hover { background: #ff8558; }
+  .btn-line { border: 1px solid currentColor; }
+  .btn-line:hover { border-color: var(--color-heat); color: var(--color-heat); }
+  .btn-coal { background: var(--color-coal); color: var(--color-paper); }
+  .btn-coal:hover { background: var(--color-graphite); }
+
+  /* Fine engineering grid behind dark sections */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
+  }
+
+  /* Frame for original media that has not been migrated yet */
+  .pending {
+    background-image: repeating-linear-gradient(135deg, transparent 0 11px, rgb(17 24 32 / 0.07) 11px 12px);
+    border: 1px dashed rgb(17 24 32 / 0.35);
+  }
+  .on-dark .pending, .pending.on-dark {
+    background-image: repeating-linear-gradient(135deg, transparent 0 11px, rgb(255 255 255 / 0.06) 11px 12px);
+    border-color: rgb(255 255 255 / 0.3);
+  }
+
+  /* Row that warms up along its bottom edge when pointed at */
+  .warm-row { position: relative; }
+  .warm-row::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(to left, var(--color-cool), var(--color-heat));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s ease;
+  }
+  .warm-row:hover::after, .warm-row:focus-within::after { transform: scaleX(1); }
+}
+
+/* Hero: the cable is laid cold, then current runs through it once. */
+.loop-warm {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: energize 4.5s 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.loop-glow {
+  opacity: 0;
+  animation: glow 2s 4.2s ease-out forwards;
+}
+@keyframes energize { to { stroke-dashoffset: 0; } }
+@keyframes glow { to { opacity: 0.22; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .loop-warm { animation: none; stroke-dashoffset: 0; }
+  .loop-glow { animation: none; opacity: 0.22; }
+  .warm-row::after { transition: none; }
+}
