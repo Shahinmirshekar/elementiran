@@ -14,7 +14,7 @@ export function HeatField() {
     const c = ref.current;
     const host = c?.parentElement;
     const ctx = c?.getContext("2d");
-    if (!c || !host || !ctx || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!c || !host || !ctx) return;
 
     const S = 0.25;
     let raf = 0, x = -1, y = -1, t = 0, visible = true;

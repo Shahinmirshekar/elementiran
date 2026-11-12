@@ -146,11 +146,3 @@
 @keyframes breathe { 50% { box-shadow: 0 0 0 9px rgb(255 107 53 / 0.22), 0 0 0 22px rgb(255 107 53 / 0.1); } }
 .heat-dot { animation: breathe 3.2s ease-in-out infinite; }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .loop-warm { animation: none; stroke-dashoffset: 0; }
-  .loop-glow { animation: none; opacity: 0.3; }
-  .loop-pulse, .heat-dot { animation: none; }
-  .heat-row::before, .ignite { transition: none; }
-  .warm-row::after { transition: none; }
-}
